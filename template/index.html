@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Flask Example</title>
+</head>
+<body>
+<br>
+<div class="container">
+	<div class="row menu">
+        	<div class="col-xl-3">
+		     <a href="{{ url_for('home') }}">Home</a> 
+		</div>
+		<div class="col-xl-3">
+		     <a href="{{ url_for('repo_details') }}">Repo details</a> 
+		</div>
+        </div>
+
+	{% block content %} 
+	       	<div class="row">
+        		<div class="col-md-4 depos">
+				{% for repo in repos %} 
+					<div><a href="{{ url_for('get_reponame', repo_name = repo) }}"><b>{{ repo }}</b></a></div> 
+				{% endfor %} 
+			</div>
+			<div class="col-md-8">
+				        {% if repo_name %} 
+					<div class="row menu">
+						<div class="col-xl-3">
+							<a href="{{ url_for('list_all_pulls', repo_name = repo_name) }}">List all pulls</a> 
+						</div>
+						<div class="col-xl-3">
+			     				<a href="{{ url_for('list_not_merged', repo_name = repo_name) }}">List pulls not merged</a> 
+						</div>
+						<div class="col-xl-3">
+				     			<a href="{{ url_for('list_issues', repo_name = repo_name) }}">List issues</a> 
+						</div>
+						<div class="col-xl-3">
+						     <a href="{{ url_for('list_forks', repo_name = repo_name) }}">List forks</a> 
+						</div>
+	                                </div>
+					<div class="row items">
+						{% for item in items %} 
+							<div><b>{{ item }}</b></div> 
+						{% endfor %} 
+					</div>
+					{% endif %}
+					{% if resp %} 
+			                            <div><h1>{{ resp }}</h1></div> 
+					{% endif %}
+			</div>
+			
+        	</div>		
+	{% endblock %}
+
+</div>
+<style>
+body{
+ padding:0;
+ margin:0;
+}
+
+.container {
+     width:1170px;
+}
+
+.row {
+     padding:20px;
+}
+
+.col-md-12{
+	width:100%;
+}
+.col-md-12 div{
+ width:200px;
+ float:left;
+}
+.col-xl-4,.col-md-4{
+	float:left;
+	width:25%;
+}
+
+.col-xl-3{
+	float:left;
+	width:15%;
+}
+
+.menu div{
+	background:#ccc;
+	border:1px solid #898989;
+	padding:5px;
+	text-align:center;
+}
+
+.depos div{
+	background:#ffaaaa;
+	border:1px solid #898989;
+	padding:5px;
+	margin:2px 10px;
+	text-align:center;
+}
+
+.items div{
+	background:#eee;
+	border:1px solid #898989;
+	padding:5px;
+	text-align:center;
+	margin:2px 10px;
+	text-align:left;
+}
+
+</style>
+</body>
+</html>
